@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-/// Property wrapper to get an bindable observable object from an environment
+/// get an bindable observable object from an environment
 @propertyWrapper
 public struct EnvironmentBinding<T: Observable & AnyObject>: DynamicProperty {
+    
     /// Access the object what should be observable, over the Environment
     @Environment(T.self) private var object
     

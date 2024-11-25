@@ -48,4 +48,9 @@ public extension Date {
     var second: Int {
         Calendar.current.component(.second, from: self)
     }
+    
+    /// change date by value & component type
+    func change(_ value: Int, for component: Calendar.Component) -> Date? {
+        Calendar.current.date(byAdding: component, value: value, to: self)
+    }
 }
