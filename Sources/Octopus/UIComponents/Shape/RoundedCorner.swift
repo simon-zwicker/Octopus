@@ -11,11 +11,11 @@ import UIKit
 #endif
 
 #if canImport(UIKit)
-struct RoundedCorner: Shape {
+public struct RoundedCorner: Shape {
     var radius: CGFloat = .infinity
     var corners: UIRectCorner = .allCorners
     
-    nonisolated func path(in rect: CGRect) -> Path {
+    nonisolated public func path(in rect: CGRect) -> Path {
         let path: UIBezierPath = .init(
             roundedRect: rect,
             byRoundingCorners: corners,
