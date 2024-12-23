@@ -30,7 +30,7 @@ public extension View {
     ///     - _ role: The optional `ButtonRole`
     ///     - action: The action closure for the `Button`
     /// - Returns: Your view wrapped up in a button
-    func button(_ role: ButtonRole?, action: @escaping () -> Void) -> some View {
+    func button(_ role: ButtonRole? = nil, action: @escaping () -> Void) -> some View {
         modifier(ButtonWrapper(role: role, action: action))
     }
 }
