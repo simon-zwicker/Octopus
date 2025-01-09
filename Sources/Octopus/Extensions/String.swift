@@ -18,6 +18,8 @@ public extension String {
     /// get characters of string as array
     var toArray: [Character] { Array(self) }
 
+	var toDate: Date? { DateFormatter().date(from: self) }
+
 	///decode String to base64
 	var base64UrlDecode: String {
 		var base64 = self
