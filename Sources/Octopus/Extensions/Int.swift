@@ -27,24 +27,18 @@ public extension Int {
     }
     
     /// get grid flex items on min max
-    func gridFlex(_ min: CGFloat, _ max: CGFloat) -> [GridItem] {
-        var items: [GridItem] = []
-        for _ in 0..<self { items.append(.init(.flexible(minimum: min, maximum: max))) }
-        return items
+	func gridFlex(_ min: CGFloat, _ max: CGFloat, spacing: CGFloat = 5) -> [GridItem] {
+		Array(repeating: .init(.flexible(minimum: min, maximum: max), spacing: spacing), count: self)
     }
     
     /// get grid fixed items on min max
-    func gridFixed(_ width: CGFloat) -> [GridItem] {
-        var items: [GridItem] = []
-        for _ in 0..<self { items.append(.init(.fixed(width))) }
-        return items
+	func gridFixed(_ width: CGFloat, spacing: CGFloat = 5) -> [GridItem] {
+		Array(repeating: .init(.fixed(width), spacing: spacing), count: self)
     }
     
     /// get grid adaptive items on min max
-    func gridAdaptive(_ min: CGFloat, _ max: CGFloat) -> [GridItem] {
-        var items: [GridItem] = []
-        for _ in 0..<self { items.append(.init(.adaptive(minimum: min, maximum: max))) }
-        return items
+	func gridAdaptive(_ min: CGFloat, _ max: CGFloat, spacing: CGFloat = 5) -> [GridItem] {
+		Array(repeating: .init(.adaptive(minimum: min, maximum: max), spacing: spacing), count: self)
     }
 }
 
