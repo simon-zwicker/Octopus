@@ -8,40 +8,25 @@
 import SwiftUI
 
 public extension Color {
-    
-    /// Initalize color by Hex code as String
-    init(hex: String) {
-        let hex: String = hex.trimmingCharacters(in: .alphanumerics.inverted)
-        var integer: UInt64 = 0
-        
-        Scanner(string: hex).scanHexInt64(&integer)
-        let a, r, g, b: UInt64
-        switch hex.count {
-        /// RGB (12-bit)
-        case 3:
-            (a, r, g, b) = (255, (integer >> 8) * 17, (integer >> 4 & 0xF) * 17, (integer & 0xF) * 17)
-            
-        /// RGB (24-bit)
-        case 6:
-            (a, r, g, b) = (255, integer >> 16, integer >> 8 & 0xFF, integer & 0xFF)
-            
-        /// ARGB (32-bit)
-        case 8:
-            (a, r, g, b) = (integer >> 24, integer >> 16 & 0xFF, integer >> 8 & 0xFF, integer & 0xFF)
-            
-        default:
-            (a, r, g, b) = (1, 1, 1, 0)
-        }
-        
-        self.init(
-            .sRGB,
-            red: r.toDouble,
-            green: g.toDouble,
-            blue: b.toDouble,
-            opacity: a.toDouble
-        )
-    }
-    
+
+	init(hex: String) {
+			let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+			var int: UInt64 = 0
+			Scanner(string: hex).scanHexInt64(&int)
+
+			let a, r, g, b: Double
+			switch hex.count {
+			case 6: // RGB (No Alpha)
+				(a, r, g, b) = (1, Double((int >> 16) & 0xFF) / 255, Double((int >> 8) & 0xFF) / 255, Double(int & 0xFF) / 255)
+			case 8: // ARGB
+				(a, r, g, b) = (Double((int >> 24) & 0xFF) / 255, Double((int >> 16) & 0xFF) / 255, Double((int >> 8) & 0xFF) / 255, Double(int & 0xFF) / 255)
+			default:
+				(a, r, g, b) = (1, 1, 1, 1) // Default to white if invalid
+			}
+
+			self.init(red: r, green: g, blue: b, opacity: a)
+		}
+
     /// lighter by percentage (default: 20%)
     func lighter(by percentage: CGFloat = 20) -> Color {
         adjust(by: abs(percentage))
@@ -51,6 +36,17 @@ public extension Color {
     func darker(by percentage: CGFloat = 20) -> Color {
         adjust(by: -1 * abs(percentage))
     }
+
+	func toHex(withAlpha: Bool = false) -> String? {
+		guard let components = UIColor(self).cgColor.components else { return nil }
+
+		let r = Int(components[0] * 255)
+		let g = Int(components[1] * 255)
+		let b = Int(components[2] * 255)
+		let a = components.count >= 4 ? Int(components[3] * 255) : 255
+
+		return withAlpha ? String(format: "#%02X%02X%02X%02X", a, r, g, b): String(format: "#%02X%02X%02X", r, g, b)
+	}
 }
 
 /// Private Helpers
