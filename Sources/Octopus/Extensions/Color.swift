@@ -27,6 +27,18 @@ public extension Color {
 		self.init(red: r, green: g, blue: b, opacity: a)
 	}
 
+	var saturation: Double {
+		getHSB()?.saturation ?? 1
+	}
+
+	var brightness: Double {
+		getHSB()?.brightness ?? 1
+	}
+
+	var hue: Double {
+		getHSB()?.hue ?? 0
+	}
+
     /// lighter by percentage (default: 20%)
     func lighter(by percentage: CGFloat = 20) -> Color {
         adjust(by: abs(percentage))
@@ -46,6 +58,23 @@ public extension Color {
 		let a = components.count >= 4 ? Int(components[3] * 255) : 255
 
 		return withAlpha ? String(format: "#%02X%02X%02X%02X", a, r, g, b): String(format: "#%02X%02X%02X", r, g, b)
+	}
+
+	private func getHSB() -> (hue: Double, saturation: Double, brightness: Double, alpha: Double)? {
+		// Convert SwiftUI Color to UIColor
+		let uiColor = UIColor(self)
+
+		// Get Hue, Saturation, and Brightness
+		var hue: CGFloat = 0
+		var saturation: CGFloat = 0
+		var brightness: CGFloat = 0
+		var alpha: CGFloat = 0
+
+		guard uiColor.getHue(&hue, saturation: &saturation, brightness: &brightness, alpha: &alpha) else {
+			return nil // Return nil if conversion fails
+		}
+
+		return (Double(hue), Double(saturation), Double(brightness), Double(alpha))
 	}
 }
 
