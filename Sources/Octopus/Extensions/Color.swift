@@ -39,6 +39,16 @@ public extension Color {
 		getHSB()?.hue ?? 0
 	}
 
+	var isDark: Bool {
+		let components = UIColor(self).cgColor.components ?? [0, 0, 0, 1]
+		let red = components[0]
+		let green = components[1]
+		let blue = components[2]
+		let luminance = (0.299 * red + 0.587 * green + 0.114 * blue)
+
+		return luminance < 0.5
+	}
+
     /// lighter by percentage (default: 20%)
     func lighter(by percentage: CGFloat = 20) -> Color {
         adjust(by: abs(percentage))
@@ -59,7 +69,10 @@ public extension Color {
 
 		return withAlpha ? String(format: "#%02X%02X%02X%02X", a, r, g, b): String(format: "#%02X%02X%02X", r, g, b)
 	}
+}
 
+/// Private Helpers
+private extension Color {
 	private func getHSB() -> (hue: Double, saturation: Double, brightness: Double, alpha: Double)? {
 		// Convert SwiftUI Color to UIColor
 		let uiColor = UIColor(self)
@@ -76,10 +89,7 @@ public extension Color {
 
 		return (Double(hue), Double(saturation), Double(brightness), Double(alpha))
 	}
-}
 
-/// Private Helpers
-private extension Color {
     private var components: (red: CGFloat, green: CGFloat, blue: CGFloat, opacity: CGFloat) {
         var red, green, blue, opacity: CGFloat
         (red, green, blue, opacity) = (0, 0, 0, 0)
