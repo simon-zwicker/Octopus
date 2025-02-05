@@ -46,7 +46,7 @@ public extension Color {
 		let blue = components[2]
 		let luminance = (0.299 * red + 0.587 * green + 0.114 * blue)
 
-		return luminance < 0.5
+		return luminance < 0.3
 	}
 
     /// lighter by percentage (default: 20%)
