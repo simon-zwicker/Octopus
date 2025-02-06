@@ -19,16 +19,11 @@ public extension View {
     }
     #endif
 
-	#if canImport(UIKit)
 	func hideKeyboard() {
-		UIApplication.shared.sendAction(
-			#selector(UIResponder.resignFirstResponder),
-			to: nil,
-			from: nil,
-			for: nil
-		)
+		if let scene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene {
+			scene.windows.first(where: { $0.isKeyWindow })?.endEditing(true)
+		}
 	}
-	#endif
 
     /// add border style
     func borderStyle(width: CGFloat = 1, color: Color = .gray, cornerRadius: CGFloat = 8) -> some View {
