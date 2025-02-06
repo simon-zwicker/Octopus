@@ -18,7 +18,18 @@ public extension View {
         clipShape(RoundedCorner(radius: radius, corners: corners))
     }
     #endif
-    
+
+	#if canImport(UIKit)
+	func hideKeyboard() {
+		UIApplication.shared.sendAction(
+			#selector(UIResponder.resignFirstResponder),
+			to: nil,
+			from: nil,
+			for: nil
+		)
+	}
+	#endif
+
     /// add border style
     func borderStyle(width: CGFloat = 1, color: Color = .gray, cornerRadius: CGFloat = 8) -> some View {
         overlay(RoundedRectangle(cornerRadius: cornerRadius).stroke(color, lineWidth: width))
