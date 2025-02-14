@@ -11,7 +11,22 @@ import UIKit
 #endif
 
 public extension View {
-    
+
+	@ViewBuilder
+	func `if`<Content: View>(
+		_ condition: Bool,
+		_ `if`: (Self) -> Content,
+		`else`: ((Self) -> Content)? = nil
+	) -> some View {
+		if condition {
+			`if`(self)
+		} else if let `else`{
+			`else`(self)
+		} else {
+			self
+		}
+	}
+
     #if canImport(UIKit)
     /// shape specific corners
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
