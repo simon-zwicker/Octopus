@@ -11,7 +11,6 @@ struct ButtonWrapper: ViewModifier {
     
     var role: ButtonRole?
     var action: () -> Void
-	var intent: () -> some Intent? = { nil }
 
     func body(content: Content) -> some View {
         Button(
