@@ -49,6 +49,39 @@ public extension Date {
         Calendar.current.component(.second, from: self)
     }
 
+	/// Next Month of the same Day
+	var nextMonth: Date? {
+		var components = Calendar.current.dateComponents([.year, .month, .day], from: self)
+		components.month! += 1
+
+		if let nextDate = Calendar.current.date(from: components) {
+			return nextDate
+		} else {
+			let range = Calendar.current.range(
+				of: .day,
+				in: .month,
+				for: self.change(1, for: .month)!
+			)
+			components.day = range?.upperBound ?? components.day
+			return Calendar.current.date(from: components)
+		}
+	}
+
+	// Next Day
+	var nextDay: Date? {
+		self.change(1, for: .day)
+	}
+
+	// Next Week
+	var nextWeek: Date? {
+		self.change(7, for: .day)
+	}
+
+	// Next Year
+	var nextYear: Date? {
+		self.change(1, for: .year)
+	}
+
 	/// difference int by toDate & component
 	func difference(to date: Date, component: Calendar.Component) -> DateComponents {
 		Calendar.current.dateComponents([component], from: self, to: date)
