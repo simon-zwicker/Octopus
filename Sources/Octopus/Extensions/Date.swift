@@ -49,6 +49,21 @@ public extension Date {
         Calendar.current.component(.second, from: self)
     }
 
+	/// First Day of Month
+	var firstDayOfMonth: Date? {
+		var components = Calendar.current.dateComponents([.year, .month], from: self)
+		components.day = 1
+		return Calendar.current.date(from: components)
+	}
+
+	/// Last Day of Month
+	var lastDayOfMonth: Date? {
+		var components = Calendar.current.dateComponents([.year, .month], from: self)
+		components.month! += 1
+		components.day = 0
+		return Calendar.current.date(from: components)
+	}
+
 	/// Next Month of the same Day
 	func nextMonth(_ value: Int = 1) -> Date? {
 		var components = Calendar.current.dateComponents([.year, .month, .day], from: self)
