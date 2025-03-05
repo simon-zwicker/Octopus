@@ -82,9 +82,9 @@ public extension Date {
 		}
 	}
 
-	func adjust(by originalDate: Date, toMonth month: Int, toYear year: Int) -> Date? {
+	func adjust(toMonth month: Int, toYear year: Int) -> Date? {
 		let calendar = Calendar.current
-			let originalDay = calendar.component(.day, from: originalDate)
+			let originalDay = calendar.component(.day, from: self)
 
 			var components = DateComponents()
 			components.year = year
