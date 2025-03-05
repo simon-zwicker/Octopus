@@ -82,6 +82,23 @@ public extension Date {
 		}
 	}
 
+	func adjust(by originalDate: Date, toMonth month: Int, toYear year: Int) -> Date? {
+		let calendar = Calendar.current
+			let originalDay = calendar.component(.day, from: originalDate)
+
+			var components = DateComponents()
+			components.year = year
+			components.month = month
+
+			if let dateForMonth = calendar.date(from: components),
+			   let range = calendar.range(of: .day, in: .month, for: dateForMonth) {
+				let maxDay = range.upperBound - 1
+				components.day = min(originalDay, maxDay)
+				return calendar.date(from: components)
+			}
+			return nil
+	}
+
 	// Next Day
 	func nextDay(_ value: Int = 1) -> Date? {
 		self.change(value, for: .day)
