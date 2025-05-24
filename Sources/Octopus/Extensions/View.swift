@@ -32,13 +32,6 @@ public extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorner(radius: radius, corners: corners))
     }
-
-	@available(iOS 18, *)
-	func hideKeyboard() {
-		if let scene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene {
-			scene.windows.first(where: { $0.isKeyWindow })?.endEditing(true)
-		}
-	}
 	#endif
 
     /// add border style
