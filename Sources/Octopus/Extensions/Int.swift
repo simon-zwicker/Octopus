@@ -8,8 +8,6 @@
 import SwiftUI
 
 public extension Int {
-    
-    /// check is integer is even
     var isEven: Bool {
         self % 2 == 0
     }
@@ -25,7 +23,6 @@ public extension Int {
         for _ in 0..<self { items.append(.init()) }
         return items
     }
-    
     /// get grid flex items on min max
 	func gridFlex(_ min: CGFloat, _ max: CGFloat, spacing: CGFloat = 5) -> [GridItem] {
 		Array(repeating: .init(.flexible(minimum: min, maximum: max), spacing: spacing), count: self)

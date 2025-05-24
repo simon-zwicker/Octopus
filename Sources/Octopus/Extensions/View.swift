@@ -34,6 +34,7 @@ public extension View {
     }
     #endif
 
+	@available(iOS 18, *)
 	func hideKeyboard() {
 		if let scene = UIApplication.shared.connectedScenes.first(where: { $0 is UIWindowScene }) as? UIWindowScene {
 			scene.windows.first(where: { $0.isKeyWindow })?.endEditing(true)
